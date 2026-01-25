@@ -1,0 +1,22 @@
+# Ejecutables compilados
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+main
+
+# Bases de datos locales
+*.db
+
+# Dependencias
+vendor/
+
+# Archivos del sistema / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+
+# Logs
+*.log
