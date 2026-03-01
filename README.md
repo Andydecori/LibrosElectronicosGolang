@@ -1,8 +1,8 @@
 # Sistema de Gestión de Biblioteca Digital
 
-**Nombre del proyecto:** Sistema de gestión de libros electrónicos
-**Integrantes:** Andrés Guerrero
-**Materia / Docente:** Programación Orientada A Objetos - Milton Palacios
+* **Nombre del proyecto:** Sistema de gestión de libros electrónicos
+* **Integrante:** Andrés Guerrero
+* **Materia - Docente:** Programación Orientada A Objetos - Milton Palacios
 
 ## Objetivos del Sistema
 El objetivo central es desplegar una API REST que exponga un ciclo CRUD completo (Crear, Leer, Actualizar y Eliminar). Como valor agregado, el sistema:
