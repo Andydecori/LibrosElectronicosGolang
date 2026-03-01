@@ -45,12 +45,15 @@ LibrosElectronicosGolang/
 ## Cómo Ejecutar
 
 1. Clona el repositorio.
-2. Abre la terminal en la carpeta raíz.
-3. Ejecuta el comando:
+   ```bash
+   https://github.com/Andydecori/LibrosElectronicosGolang.git
+    ```
+3. Abre la terminal en la carpeta raíz.
+4. Ejecuta el comando:
    ```bash
    go run main.go
    ```
-4. Abre tu navegador en: http://localhost:8080
+5. Abre tu navegador en: http://localhost:8080
 
 ## Visión del Futuro
 Actualmente, este proyecto representa una base monolítica sólida. A futuro, visualizo la evolución de esta herramienta hacia una **arquitectura de microservicios en la nube**, lo que permitirá gestionar múltiples bibliotecas de forma simultánea y altamente escalable. 
