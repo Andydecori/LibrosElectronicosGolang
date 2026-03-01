@@ -26,7 +26,24 @@ func New(s *service.Service) *BookHandler {
 // Gestiona peticiones GET (listar) y POST (crear).
 func (h *BookHandler) HandleBooks(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
+
 	case http.MethodGet:
+		// NUEVO: Revisamos si la URL contiene el parámetro 'author' (Query Param)
+		authorParam := r.URL.Query().Get("author")
+
+		// Si el parámetro existe, ejecutamos el Servicio 6 (Búsqueda por Autor)
+		if authorParam != "" {
+			libros, err := h.service.BuscarPorAutor(authorParam)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(libros)
+			return // Retornamos para salir de la función y no ejecutar la búsqueda general
+		}
+
+		// Si no hay parámetro 'author', ejecutamos el Servicio 2 normal (Listar Todos)
 		libros, err := h.service.ObtenTodosLosLibros()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -107,4 +124,32 @@ func (h *BookHandler) HandleBookByID(w http.ResponseWriter, r *http.Request) {
 	default:
 		http.Error(w, "metodo no disponible", http.StatusMethodNotAllowed)
 	}
+}
+
+// GetStats maneja la ruta GET /books/stats
+// Se comunica con el servicio para obtener el total de libros y lo devuelve en formato JSON.
+func (h *BookHandler) GetStats(w http.ResponseWriter, r *http.Request) {
+	total, err := h.service.GetTotalBooks()
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"total_libros": total,
+		"mensaje":      "Estadisticas recuperadas con exito",
+	})
+}
+
+// HealthCheck maneja la ruta GET /health
+// Servicio vital para monitoreo: verifica que el servidor esté encendido y respondiendo.
+// Devuelve un JSON con el estado operativo del sistema y la versión.
+func (h *BookHandler) HealthCheck(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{
+		"status":   "Servidor Operativo ",
+		"database": "SQLite Conectada ",
+		"version":  "1.0.0",
+	})
 }

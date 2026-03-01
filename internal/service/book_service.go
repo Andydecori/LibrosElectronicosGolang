@@ -54,3 +54,18 @@ func (s *Service) UpdateAlLibro(id int, libro model.Libro) (*model.Libro, error)
 func (s *Service) RemoverLibro(id int) error {
 	return s.store.Delete(id)
 }
+
+// GetTotalBooks es el caso de uso para obtener estadísticas
+// Llama a la capa Store para contabilizar cuántos registros existen actualmente.
+func (s *Service) GetTotalBooks() (int, error) {
+	return s.store.CountLibros()
+}
+
+// BuscarPorAutor es el caso de uso que filtra el catálogo mediante Query Params.
+// Valida que el parámetro de búsqueda no viaje completamente vacío.
+func (s *Service) BuscarPorAutor(author string) ([]*model.Libro, error) {
+	if author == "" {
+		return nil, errors.New("el parámetro de autor no puede estar vacío")
+	}
+	return s.store.GetByAuthor(author)
+}
